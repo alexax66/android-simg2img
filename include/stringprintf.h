@@ -1,1 +1,1 @@
-/home/alexax/src/android-simg2img/android-base/include/android-base/stringprintf.h
+.././android-base/include/android-base/stringprintf.h
