@@ -26,7 +26,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <sparse/sparse.h>
+#include "include/sparse/sparse.h"
 
 #ifndef O_BINARY
 #define O_BINARY 0

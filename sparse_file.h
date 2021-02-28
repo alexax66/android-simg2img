@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-#include <sparse/sparse.h>
+#include "include/sparse/sparse.h"
 
 struct sparse_file {
   unsigned int block_size;

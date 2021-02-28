@@ -28,16 +28,16 @@
 #include <algorithm>
 #include <string>
 
-#include <sparse/sparse.h>
+#include "include/sparse/sparse.h"
 
-#include "android-base/stringprintf.h"
+#include "include/stringprintf.h"
 #include "defs.h"
 #include "output_file.h"
 #include "sparse_crc32.h"
 #include "sparse_file.h"
 #include "sparse_format.h"
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) || defined(__FreeBSD__)
 #define lseek64 lseek
 #define off64_t off_t
 #endif

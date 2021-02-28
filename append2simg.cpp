@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <sparse/sparse.h>
+#include "include/sparse/sparse.h"
 #include "backed_block.h"
 #include "sparse_file.h"
 
@@ -32,7 +32,7 @@
 #define O_BINARY 0
 #endif
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) || defined(__FreeBSD__)
 #define lseek64 lseek
 #define off64_t off_t
 #endif

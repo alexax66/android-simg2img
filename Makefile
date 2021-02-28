@@ -21,6 +21,8 @@ DEP_CXX  ?= g++
 AR       ?= ar
 RANLIB   ?= ranlib
 STRIP    ?= strip
+RM       ?= rm -f
+
 CPPFLAGS += -std=gnu++17 -O2 -W -Wall -Werror -Wextra \
     -D__STDC_FORMAT_MACROS -D__STDC_CONSTANT_MACROS
 
@@ -36,7 +38,6 @@ LIB_SRCS = \
     sparse_read.cpp \
     android-base/stringprintf.cpp
 LIB_OBJS = $(LIB_SRCS:%.cpp=%.o)
-LIB_INCS = -Iinclude -Iandroid-base/include
 
 LDFLAGS += -L. -l$(LIB_NAME) -lm -lz
 
@@ -82,30 +83,22 @@ $(LIB_NAME): $(LIB_OBJS)
 		$(RANLIB) $(SLIB)
 
 simg2img: $(SIMG2IMG_SRCS) $(LIB_NAME)
-		$(CXX) $(CPPFLAGS) $(LIB_INCS) -o simg2img $< $(LDFLAGS)
+		$(CXX) $(CPPFLAGS) -o simg2img $< $(LDFLAGS)
 
 simg2simg: $(SIMG2SIMG_SRCS) $(LIB_NAME)
-		$(CXX) $(CPPFLAGS) $(LIB_INCS) -o simg2simg $< $(LDFLAGS)
+		$(CXX) $(CPPFLAGS) -o simg2simg $< $(LDFLAGS)
 
 img2simg: $(IMG2SIMG_SRCS) $(LIB_NAME)
-		$(CXX) $(CPPFLAGS) $(LIB_INCS) -o img2simg $< $(LDFLAGS)
+		$(CXX) $(CPPFLAGS) -o img2simg $< $(LDFLAGS)
 
 append2simg: $(APPEND2SIMG_SRCS) $(LIB_NAME)
-		$(CXX) $(CPPFLAGS) $(LIB_INCS) -o append2simg $< $(LDFLAGS)
+		$(CXX) $(CPPFLAGS) -o append2simg $< $(LDFLAGS)
 
-%.o: %.cpp .depend
-		$(CXX) $(CPPFLAGS) $(LIB_INCS) -c $< -o $@
+%.o: %.cpp
+		$(CXX) $(CPPFLAGS) -c $< -o $@
 
 clean:
-		$(RM) -f *.o *.a simg2img simg2simg img2simg append2simg .depend
-
-ifneq ($(wildcard .depend),)
-include .depend
-endif
-
-.depend:
-		@$(RM) .depend
-		@$(foreach SRC, $(SRCS), $(DEP_CXX) $(LIB_INCS) $(SRC) $(CFLAGS) -MT $(SRC:%.c=%.o) -MM >> .depend;)
+		$(RM) *.o *.a simg2img simg2simg img2simg append2simg
 
 format:
 		find . -regex '.*\.\(cpp\|hpp\|cc\|cxx\)' -exec clang-format -style=file -i {} \;
